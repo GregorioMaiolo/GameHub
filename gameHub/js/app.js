@@ -30,6 +30,7 @@ const infoControls = document.getElementById("infoControls");
 /* Game Data */
 
 const games = {
+
     snake: {
         title: "Snake",
         description: "Classic Arcade Game",
@@ -60,7 +61,16 @@ const games = {
         category: "PUZZLE",
         instructions: "Find matching pairs of cards. Remember the positions and try to finish with as few moves as possible.",
         controls: "Click on two cards to reveal them."
+    },
+
+    numberguess: {
+        title: "Number Guessing",
+        description: "Guess the Secret Number",
+        category: "PUZZLE",
+        instructions: "The computer generates a random number between 1 and your chosen maximum. Try to guess the correct number.",
+        controls: "Enter a number and click Guess."
     }
+
 };
 
 /* LocalStorage Data */
@@ -94,35 +104,48 @@ function saveRecentlyPlayed() {
 /* Favorites */
 
 function updateFavoriteButtons() {
+
     gameCards.forEach(card => {
+
         const gameId = card.dataset.game;
         const button = card.querySelector(".favorite-btn");
 
         const isFavorite = favorites.includes(gameId);
 
         button.textContent = isFavorite ? "★" : "☆";
+
         button.classList.toggle("is-favorite", isFavorite);
+
         button.title = isFavorite
             ? "Remove from Favorites"
             : "Add to Favorites";
+
     });
+
 }
 
 function toggleFavorite(gameId) {
+
     if (favorites.includes(gameId)) {
+
         favorites = favorites.filter(id => id !== gameId);
+
     } else {
+
         favorites.push(gameId);
+
     }
 
     saveFavorites();
     updateFavoriteButtons();
     applyFilters();
+
 }
 
 /* Recently Played */
 
 function addRecentlyPlayed(gameId) {
+
     recentlyPlayed = recentlyPlayed.filter(id => id !== gameId);
 
     recentlyPlayed.unshift(gameId);
@@ -131,15 +154,19 @@ function addRecentlyPlayed(gameId) {
     recentlyPlayed = recentlyPlayed.slice(0, 10);
 
     saveRecentlyPlayed();
+
 }
 
 /* Filters */
 
 function applyFilters() {
+
     const searchText = searchInput.value.toLowerCase();
 
     gameCards.forEach(card => {
+
         const gameId = card.dataset.game;
+
         const gameName = card.querySelector("h3").textContent.toLowerCase();
 
         const matchesSearch = gameName.includes(searchText);
@@ -157,6 +184,7 @@ function applyFilters() {
         card.style.display = matchesSearch && matchesFilter
             ? "block"
             : "none";
+
     });
 
     const visibleGames = [...gameCards].filter(
@@ -166,14 +194,18 @@ function applyFilters() {
     const countElement = document.getElementById("gameCount");
 
     if (countElement) {
+
         countElement.textContent =
             `${visibleGames.length} Games Available`;
+
     }
+
 }
 
 /* Game Info */
 
 function openGameInfo(gameId) {
+
     const game = games[gameId];
 
     if (!game) return;
@@ -185,15 +217,19 @@ function openGameInfo(gameId) {
     infoControls.textContent = game.controls;
 
     infoModal.classList.remove("hidden");
+
 }
 
 function closeGameInfo() {
+
     infoModal.classList.add("hidden");
+
 }
 
 /* Open Game */
 
 function openGame(gameId) {
+
     const game = games[gameId];
 
     if (!game) return;
@@ -215,26 +251,41 @@ function openGame(gameId) {
     document.getElementById("tictactoeGame")?.classList.add("hidden");
     document.getElementById("pongGame")?.classList.add("hidden");
     document.getElementById("memoryGame")?.classList.add("hidden");
+    document.getElementById("numberguessGame")?.classList.add("hidden");
 
     stopPong();
 
     if (gameId === "snake") {
+
         snakeGame.classList.remove("hidden");
         initSnake();
+
     } else if (gameId === "tictactoe") {
+
         initTicTacToe();
+
     } else if (gameId === "pong") {
+
         initPong();
+
     } else if (gameId === "memory") {
+
         initMemory();
+
+    } else if (gameId === "numberguess") {
+
+        initNumberGuess();
+
     }
 
     applyFilters();
+
 }
 
 /* Close Game */
 
 function closeGame() {
+
     stopSnake();
     stopPong();
 
@@ -244,43 +295,59 @@ function closeGame() {
     document.getElementById("tictactoeGame")?.classList.add("hidden");
     document.getElementById("pongGame")?.classList.add("hidden");
     document.getElementById("memoryGame")?.classList.add("hidden");
+    document.getElementById("numberguessGame")?.classList.add("hidden");
 
     gameView.classList.add("hidden");
     libraryView.classList.remove("hidden");
+
 }
 
 /* Card Events */
 
 gameCards.forEach(card => {
+
     const gameId = card.dataset.game;
 
     card.addEventListener("click", () => {
+
         openGame(gameId);
+
     });
 
     const favoriteButton = card.querySelector(".favorite-btn");
 
     favoriteButton.addEventListener("click", event => {
+
         event.stopPropagation();
+
         toggleFavorite(gameId);
+
     });
 
     const infoButton = card.querySelector(".info-btn");
 
     infoButton.addEventListener("click", event => {
+
         event.stopPropagation();
+
         openGameInfo(gameId);
+
     });
+
 });
 
 /* Sidebar Navigation */
 
 document.querySelectorAll(".sidebar nav a").forEach(link => {
+
     link.addEventListener("click", event => {
+
         event.preventDefault();
 
         document.querySelectorAll(".sidebar nav a").forEach(item => {
+
             item.classList.remove("active");
+
         });
 
         link.classList.add("active");
@@ -288,7 +355,9 @@ document.querySelectorAll(".sidebar nav a").forEach(link => {
         currentFilter = link.dataset.filter;
 
         applyFilters();
+
     });
+
 });
 
 /* Search */
@@ -302,9 +371,13 @@ backButton.addEventListener("click", closeGame);
 closeInfo.addEventListener("click", closeGameInfo);
 
 infoModal.addEventListener("click", event => {
+
     if (event.target === infoModal) {
+
         closeGameInfo();
+
     }
+
 });
 
 /* Initial Setup */

@@ -137,6 +137,29 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="game-card" data-game="numberguess">
+
+                            <div class="game-image numberguess">
+                                <img src="assets/images/numberguess.jpg" alt="Number Guessing">
+                                <span>PUZZLE</span>
+                            </div>
+
+                            <div class="game-info">
+                                <h3>Number Guessing</h3>
+                                <p>Guess the Secret Number</p>
+
+                                <div class="game-actions">
+                                    <button class="favorite-btn" title="Add to Favorites">
+                                        ☆
+                                    </button>
+
+                                    <button class="info-btn" title="Game Information">
+                                        i
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
 
                     </div>
 
@@ -184,6 +207,34 @@
                         <p>This game is not available yet.</p>
                     </div>
 
+                    <div id="numberguessGame" class="numberguess-game hidden">
+
+                        <h2>Guess the Number!</h2>
+
+                        <p>Choose a maximum number:</p>
+
+                        <input type="number" id="maxNumber" value="100" min="2">
+
+                        <button id="startGuessing">Start Game</button>
+
+                        <div id="guessArea" class="hidden">
+
+                            <p>Enter your guess:</p>
+
+                            <input type="number" id="guessInput" placeholder="Your guess">
+
+                            <button id="guessButton">Guess</button>
+
+                            <h3 id="guessMessage">Good luck!</h3>
+
+                            <p>Attempts: <span id="guessAttempts">0</span></p>
+
+                            <button id="guessRestart">New Game</button>
+
+                        </div>
+
+                    </div>
+
                 </div>
 
 
@@ -223,6 +274,7 @@
     <script src="js/games/tictactoe.js"></script>
     <script src="js/games/pong.js"></script>
     <script src="js/games/memory.js"></script>
+    <script src="js/games/numberguess.js"></script>
 </body>
 
 </html>
