@@ -315,6 +315,23 @@ body {
     transition: 0.2s;
 }
 
+#tttRestart,
+#memoryRestart {
+    background: #8b5cf6;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+#tttRestart:hover,
+#memoryRestart:hover {
+    background: #7c3aed;
+}
+
 #snakeRestart:hover {
     background: #7c3aed;
 }
@@ -426,6 +443,74 @@ body {
     font-size: 15px;
     margin-top: 10px;
 }
+
+
+
+/* Tic Tac Toe */
+
+.ttt-board {
+    display: grid;
+    grid-template-columns: repeat(3, 90px);
+    gap: 8px;
+    margin: 20px 0;
+}
+
+.ttt-cell {
+    width: 90px;
+    height: 90px;
+    font-size: 35px;
+    font-weight: bold;
+    color: white;
+    background: #202a33;
+    border: 1px solid #444;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Pong */
+
+#pongCanvas {
+    max-width: 100%;
+    height: auto;
+    background: #10151b;
+    border-radius: 10px;
+    margin: 15px 0;
+}
+
+/* Memory */
+
+.memory-board {
+    display: grid;
+    grid-template-columns: repeat(4, 75px);
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.memory-card {
+    width: 75px;
+    height: 75px;
+    font-size: 28px;
+    color: white;
+    background: #202a33;
+    border: 1px solid #444;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.memory-card.revealed,
+.memory-card.matched {
+    background: #8b5cf6;
+}
+
+.memory-card.matched {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.mini-game {
+    margin-top: 20px;
+}
+
 
 /* Responsive */
 

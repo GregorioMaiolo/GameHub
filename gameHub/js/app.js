@@ -209,14 +209,24 @@ function openGame(gameId) {
     gameDescription.textContent = game.description;
     gameCategory.textContent = game.category;
 
+    snakeGame.classList.add("hidden");
+    placeholder.classList.add("hidden");
+
+    document.getElementById("tictactoeGame")?.classList.add("hidden");
+    document.getElementById("pongGame")?.classList.add("hidden");
+    document.getElementById("memoryGame")?.classList.add("hidden");
+
+    stopPong();
+
     if (gameId === "snake") {
         snakeGame.classList.remove("hidden");
-        placeholder.classList.add("hidden");
-
         initSnake();
-    } else {
-        snakeGame.classList.add("hidden");
-        placeholder.classList.remove("hidden");
+    } else if (gameId === "tictactoe") {
+        initTicTacToe();
+    } else if (gameId === "pong") {
+        initPong();
+    } else if (gameId === "memory") {
+        initMemory();
     }
 
     applyFilters();
@@ -226,6 +236,14 @@ function openGame(gameId) {
 
 function closeGame() {
     stopSnake();
+    stopPong();
+
+    snakeGame.classList.add("hidden");
+    placeholder.classList.remove("hidden");
+
+    document.getElementById("tictactoeGame")?.classList.add("hidden");
+    document.getElementById("pongGame")?.classList.add("hidden");
+    document.getElementById("memoryGame")?.classList.add("hidden");
 
     gameView.classList.add("hidden");
     libraryView.classList.remove("hidden");
