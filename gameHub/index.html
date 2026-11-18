@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameHub</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="app">
+
+        <aside class="sidebar">
+            <h2 class="logo">GAME<span>HUB</span></h2>
+
+            <nav>
+                <a href="#" class="active">Library</a>
+                <a href="#">Favorites</a>
+                <a href="#">Recently Played</a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <p>GAMEHUB v1.0</p>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div id="libraryView">
+
+                <header class="topbar">
+                    <div>
+                        <p class="welcome">WELCOME BACK</p>
+                        <h1>Your Game Library</h1>
+                    </div>
+
+                    <input type="text" id="searchInput" placeholder="Search games...">
+                </header>
+
+                <section class="games-section">
+
+                    <div class="section-header">
+                        <h2>All Games</h2>
+                        <p>4 Games Available</p>
+                    </div>
+
+                    <div class="games-grid">
+
+                        <div class="game-card" data-game="snake">
+                            <div class="game-image snake">
+                                <span>ARCADE</span>
+                            </div>
+                            <div class="game-info">
+                                <h3>Snake</h3>
+                                <p>Classic Arcade Game</p>
+                            </div>
+                        </div>
+
+                        <div class="game-card" data-game="tictactoe">
+                            <div class="game-image tictactoe">
+                                <span>STRATEGY</span>
+                            </div>
+                            <div class="game-info">
+                                <h3>Tic Tac Toe</h3>
+                                <p>Classic Strategy Game</p>
+                            </div>
+                        </div>
+
+                        <div class="game-card" data-game="pong">
+                            <div class="game-image pong">
+                                <span>ARCADE</span>
+                            </div>
+                            <div class="game-info">
+                                <h3>Pong</h3>
+                                <p>Retro Arcade Game</p>
+                            </div>
+                        </div>
+
+                        <div class="game-card" data-game="memory">
+                            <div class="game-image memory">
+                                <span>PUZZLE</span>
+                            </div>
+                            <div class="game-info">
+                                <h3>Memory</h3>
+                                <p>Memory Challenge</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </section>
+            </div>
+            <div id="gameView" class="hidden">
+
+                <div class="game-header">
+                    <button id="backButton">← Back to Library</button>
+                    <span id="gameCategory">ARCADE</span>
+                </div>
+
+                <div class="game-title">
+                    <h1 id="gameTitle">Game Title</h1>
+                    <p id="gameDescription">Game Description</p>
+                </div>
+
+                <div id="gameContent" class="game-content">
+                    <h2>Game Area</h2>
+                    <p>Here will be your game.</p>
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>
