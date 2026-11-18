@@ -147,9 +147,19 @@ body {
     justify-content: center;
     align-items: center;
     position: relative;
+    overflow: hidden;
+}
+
+.game-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .game-image span {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
     font-size: 11px;
     letter-spacing: 2px;
     font-weight: bold;
@@ -159,19 +169,19 @@ body {
 }
 
 .snake {
-    background: linear-gradient(135deg, #134e36, #22c55e);
+    background: #134e36;
 }
 
 .tictactoe {
-    background: linear-gradient(135deg, #312e81, #8b5cf6);
+    background: #312e81;
 }
 
 .pong {
-    background: linear-gradient(135deg, #164e63, #06b6d4);
+    background: #164e63;
 }
 
 .memory {
-    background: linear-gradient(135deg, #7c2d12, #f97316);
+    background: #7c2d12;
 }
 
 .game-info {
@@ -315,6 +325,107 @@ body {
     }
 }
 
+
+/* Game Actions */
+
+.game-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.game-actions button {
+    width: 35px;
+    height: 35px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.2s;
+}
+
+.favorite-btn {
+    background: #252037;
+    color: #a78bfa;
+    border: 1px solid #38304f;
+}
+
+.favorite-btn.is-favorite {
+    background: #8b5cf6;
+    color: white;
+}
+
+.info-btn {
+    background: #252936;
+    color: #a0a6b5;
+    border: 1px solid #383e4c;
+}
+
+.game-actions button:hover {
+    transform: scale(1.08);
+    border-color: #8b5cf6;
+}
+
+/* Game Info Modal */
+
+.info-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 100;
+}
+
+.info-box {
+    position: relative;
+    background: #191d28;
+    border: 1px solid #38304f;
+    border-radius: 14px;
+    padding: 35px;
+    width: 100%;
+    max-width: 450px;
+}
+
+.close-info {
+    position: absolute;
+    right: 18px;
+    top: 12px;
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+#infoCategory {
+    color: #a78bfa;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+.info-box h2 {
+    margin: 15px 0;
+    font-size: 28px;
+}
+
+.info-box p {
+    color: #9298a8;
+    line-height: 1.6;
+}
+
+.info-details {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.info-details h3 {
+    font-size: 15px;
+    margin-top: 10px;
+}
 
 /* Responsive */
 

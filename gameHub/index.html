@@ -15,11 +15,13 @@
         <aside class="sidebar">
             <h2 class="logo">GAME<span>HUB</span></h2>
 
+
             <nav>
-                <a href="#" class="active">Library</a>
-                <a href="#">Favorites</a>
-                <a href="#">Recently Played</a>
+                <a href="#" class="active" data-filter="all">Library</a>
+                <a href="#" data-filter="favorites">Favorites</a>
+                <a href="#" data-filter="recent">Recently Played</a>
             </nav>
+
 
             <div class="sidebar-bottom">
                 <p>GAMEHUB v1.0</p>
@@ -42,48 +44,97 @@
 
                     <div class="section-header">
                         <h2>All Games</h2>
-                        <p>4 Games Available</p>
+                        <p id="gameCount">4 Games Available</p>
                     </div>
 
                     <div class="games-grid">
 
+
                         <div class="game-card" data-game="snake">
+
                             <div class="game-image snake">
+                                <img src="assets/images/snake.jpg" alt="Snake">
                                 <span>ARCADE</span>
                             </div>
+
                             <div class="game-info">
                                 <h3>Snake</h3>
                                 <p>Classic Arcade Game</p>
+
+                                <div class="game-actions">
+                                    <button class="favorite-btn" title="Add to Favorites">
+                                        ☆
+                                    </button>
+
+                                    <button class="info-btn" title="Game Information">
+                                        i
+                                    </button>
+                                </div>
                             </div>
+
                         </div>
+
 
                         <div class="game-card" data-game="tictactoe">
                             <div class="game-image tictactoe">
+                                <img src="assets/images/tic-tac-toe.jpg" alt="Tic Tac Toe">
                                 <span>STRATEGY</span>
                             </div>
                             <div class="game-info">
                                 <h3>Tic Tac Toe</h3>
                                 <p>Classic Strategy Game</p>
+
+                                <div class="game-actions">
+                                    <button class="favorite-btn" title="Add to Favorites">
+                                        ☆
+                                    </button>
+
+                                    <button class="info-btn" title="Game Information">
+                                        i
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
                         <div class="game-card" data-game="pong">
                             <div class="game-image pong">
+                                <img src="assets/images/pong.png" alt="Pong">
                                 <span>ARCADE</span>
                             </div>
                             <div class="game-info">
                                 <h3>Pong</h3>
                                 <p>Retro Arcade Game</p>
+
+                                <div class="game-actions">
+                                    <button class="favorite-btn" title="Add to Favorites">
+                                        ☆
+                                    </button>
+
+                                    <button class="info-btn" title="Game Information">
+                                        i
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
                         <div class="game-card" data-game="memory">
                             <div class="game-image memory">
+                                <img src="assets/images/memory.png" alt="Memory">
                                 <span>PUZZLE</span>
                             </div>
                             <div class="game-info">
                                 <h3>Memory</h3>
                                 <p>Memory Challenge</p>
+
+                                <div class="game-actions">
+                                    <button class="favorite-btn" title="Add to Favorites">
+                                        ☆
+                                    </button>
+
+                                    <button class="info-btn" title="Game Information">
+                                        i
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
@@ -135,6 +186,32 @@
 
                 </div>
 
+
+            </div>
+
+            <div id="infoModal" class="info-modal hidden">
+
+                <div class="info-box">
+
+                    <button id="closeInfo" class="close-info">×</button>
+
+                    <span id="infoCategory">ARCADE</span>
+
+                    <h2 id="infoTitle">Snake</h2>
+
+                    <p id="infoDescription">
+                        Game Description
+                    </p>
+
+                    <div class="info-details">
+                        <h3>How to Play</h3>
+                        <p id="infoInstructions"></p>
+
+                        <h3>Controls</h3>
+                        <p id="infoControls"></p>
+                    </div>
+
+                </div>
 
             </div>
         </main>
