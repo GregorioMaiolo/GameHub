@@ -1,4 +1,3 @@
-
 * {
     margin: 0;
     padding: 0;
@@ -251,6 +250,69 @@ body {
     align-items: center;
     gap: 15px;
     text-align: center;
+}
+
+
+/* Snake Game */
+
+.snake-game {
+    width: 100%;
+    max-width: 500px;
+    align-items: center;
+    gap: 20px;
+}
+
+.snake-stats {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.snake-stats p {
+    color: #858b9a;
+    font-size: 11px;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+}
+
+.snake-stats h2 {
+    color: #a78bfa;
+    font-size: 24px;
+}
+
+#snakeCanvas {
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 1;
+    background: #10151b;
+    border: 1px solid #303746;
+    border-radius: 8px;
+}
+
+#snakeMessage {
+    color: #a78bfa;
+    font-size: 14px;
+}
+
+#snakeRestart {
+    background: #8b5cf6;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+#snakeRestart:hover {
+    background: #7c3aed;
+}
+
+@media (max-width: 500px) {
+    .game-content {
+        padding: 15px;
+    }
 }
 
 

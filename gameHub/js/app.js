@@ -39,12 +39,16 @@ const games = {
 };
 
 // Spiel öffnen
+
 function openGame(gameId) {
     const game = games[gameId];
 
     if (!game) {
         return;
     }
+
+    // Anderes Spiel beenden
+    stopSnake();
 
     libraryView.classList.add("hidden");
     gameView.classList.remove("hidden");
@@ -53,16 +57,32 @@ function openGame(gameId) {
     gameDescription.textContent = game.description;
     gameCategory.textContent = game.category;
 
-    console.log("Opening game:", game.title);
+    const snakeGame = document.getElementById("snakeGame");
+    const placeholder = document.getElementById("placeholderGame");
+
+    if (gameId === "snake") {
+        snakeGame.classList.remove("hidden");
+        placeholder.classList.add("hidden");
+
+        initSnake();
+    } else {
+        snakeGame.classList.add("hidden");
+        placeholder.classList.remove("hidden");
+    }
 }
 
+
 // Zurück zur Library
+
 function closeGame() {
+    stopSnake();
+
     gameView.classList.add("hidden");
     libraryView.classList.remove("hidden");
 
     console.log("Back to library");
 }
+
 
 // Klick auf eine Game-Card
 gameCards.forEach(card => {

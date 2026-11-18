@@ -103,10 +103,38 @@
                     <p id="gameDescription">Game Description</p>
                 </div>
 
+
                 <div id="gameContent" class="game-content">
-                    <h2>Game Area</h2>
-                    <p>Here will be your game.</p>
+
+                    <div id="snakeGame" class="snake-game hidden">
+
+                        <div class="snake-stats">
+                            <div>
+                                <p>SCORE</p>
+                                <h2 id="snakeScore">0</h2>
+                            </div>
+
+                            <div>
+                                <p>HIGH SCORE</p>
+                                <h2 id="snakeHighscore">0</h2>
+                            </div>
+                        </div>
+
+                        <canvas id="snakeCanvas" width="400" height="400"></canvas>
+
+                        <p id="snakeMessage">Press SPACE to start</p>
+
+                        <button id="snakeRestart">Restart Game</button>
+
+                    </div>
+
+                    <div id="placeholderGame">
+                        <h2>Coming Soon</h2>
+                        <p>This game is not available yet.</p>
+                    </div>
+
                 </div>
+
 
             </div>
         </main>
@@ -114,6 +142,7 @@
     </div>
 
     <script src="js/app.js"></script>
+    <script src="js/games/snake.js"></script>
 </body>
 
 </html>
