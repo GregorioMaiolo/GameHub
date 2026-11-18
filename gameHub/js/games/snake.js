@@ -5,21 +5,44 @@ const ctx = canvas.getContext("2d");
 const scoreElement = document.getElementById("snakeScore");
 const highscoreElement = document.getElementById("snakeHighscore");
 const messageElement = document.getElementById("snakeMessage");
+const livesElement = document.getElementById("snakeLives");
 const restartButton = document.getElementById("snakeRestart");
+
+const settingsElement = document.getElementById("snakeSettings");
+const extraLivesToggle = document.getElementById("snakeExtraLives");
+const obstaclesToggle = document.getElementById("snakeObstacles");
+const startButton = document.getElementById("snakeStart");
 
 const gridSize = 20;
 const tileCount = canvas.width / gridSize;
 
 let snake;
 let food;
+let heart;
+let blocks = [];
+
+let extraLivesEnabled = false;
+let obstaclesEnabled = false;
+
 let direction;
 let nextDirection;
+
 let score;
+let lives = 0;
+
 let highscore = Number(localStorage.getItem("snakeHighscore")) || 0;
 
 let gameInterval = null;
 let gameRunning = false;
 let gameActive = false;
+let gamePaused = false;
+let gameOver = false;
+
+// Zufällige Anzahl Essen bis zum nächsten Herz
+let foodsUntilHeart;
+
+// Zufällige Anzahl Essen bis zum nächsten Block
+let foodsUntilBlock;
 
 highscoreElement.textContent = highscore;
 
@@ -29,11 +52,44 @@ function initSnake() {
     resetSnake();
 }
 
+// Zufällige Zahl zwischen min und max
+function randomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// Freie Position auf dem Spielfeld finden
+function getRandomPosition() {
+    let position;
+
+    do {
+        position = {
+            x: Math.floor(Math.random() * tileCount),
+            y: Math.floor(Math.random() * tileCount)
+        };
+
+    } while (
+        snake.some(part => part.x === position.x && part.y === position.y) ||
+        (food && food.x === position.x && food.y === position.y) ||
+        (heart && heart.x === position.x && heart.y === position.y) ||
+        blocks.some(block => block.x === position.x && block.y === position.y)
+    );
+
+    return position;
+}
+
 // Spiel zurücksetzen
 function resetSnake() {
     clearInterval(gameInterval);
 
     gameRunning = false;
+    gamePaused = false;
+    gameOver = false;
+
+    extraLivesToggle.disabled = false;
+    obstaclesToggle.disabled = false;
+
+    settingsElement.classList.remove("hidden");
+    startButton.classList.remove("hidden");
 
     snake = [
         { x: 10, y: 10 },
@@ -45,38 +101,84 @@ function resetSnake() {
     nextDirection = { x: 1, y: 0 };
 
     score = 0;
+    lives = 0;
+
+    heart = null;
+    blocks = [];
+
+    foodsUntilHeart = randomNumber(7, 10);
+    foodsUntilBlock = randomNumber(5, 7);
 
     createFood();
 
     scoreElement.textContent = score;
-    messageElement.textContent = "Press SPACE to start";
+    livesElement.textContent = lives;
 
+    messageElement.textContent = "Choose your settings";
     drawSnake();
 }
 
 // Essen erstellen
 function createFood() {
-    food = {
-        x: Math.floor(Math.random() * tileCount),
-        y: Math.floor(Math.random() * tileCount)
-    };
+    food = getRandomPosition();
+}
 
-    // Essen darf nicht auf der Schlange liegen
-    if (snake.some(part => part.x === food.x && part.y === food.y)) {
-        createFood();
-    }
+// Herz erstellen
+function createHeart() {
+    heart = getRandomPosition();
+}
+
+// Block erstellen
+function createBlock() {
+    blocks.push(getRandomPosition());
 }
 
 // Spiel starten
 function startSnake() {
-    if (!gameActive || gameRunning) {
+    if (!gameActive || gameRunning || gameOver) {
         return;
     }
 
+    // Einstellungen übernehmen
+    extraLivesEnabled = extraLivesToggle.checked;
+    obstaclesEnabled = obstaclesToggle.checked;
+
+    // Einstellungen während des Spiels sperren
+    extraLivesToggle.disabled = true;
+    obstaclesToggle.disabled = true;
+
+    settingsElement.classList.add("hidden");
+
     gameRunning = true;
+    gamePaused = false;
+
     messageElement.textContent = "";
 
     gameInterval = setInterval(moveSnake, 110);
+}
+
+// Spiel pausieren oder fortsetzen
+function togglePause() {
+    if (!gameActive || gameOver) {
+        return;
+    }
+
+    if (gameRunning) {
+        clearInterval(gameInterval);
+
+        gameRunning = false;
+        gamePaused = true;
+
+        messageElement.textContent = "PAUSED - Press P to continue";
+
+    } else if (gamePaused) {
+        gamePaused = false;
+        gameRunning = true;
+
+        messageElement.textContent = "";
+
+        gameInterval = setInterval(moveSnake, 110);
+    }
 }
 
 // Schlange bewegen
@@ -90,6 +192,10 @@ function moveSnake() {
 
     const ateFood = head.x === food.x && head.y === food.y;
 
+    const ateHeart = heart &&
+        head.x === heart.x &&
+        head.y === heart.y;
+
     // Kollision mit Wänden
     if (
         head.x < 0 ||
@@ -97,7 +203,13 @@ function moveSnake() {
         head.y < 0 ||
         head.y >= tileCount
     ) {
-        endSnake();
+        loseLife();
+        return;
+    }
+
+    // Kollision mit Hindernissen
+    if (blocks.some(block => block.x === head.x && block.y === head.y)) {
+        loseLife();
         return;
     }
 
@@ -105,29 +217,90 @@ function moveSnake() {
     const body = ateFood ? snake : snake.slice(0, -1);
 
     if (body.some(part => part.x === head.x && part.y === head.y)) {
-        endSnake();
+        loseLife();
         return;
     }
 
     snake.unshift(head);
 
+    // Normales Essen
     if (ateFood) {
         score += 10;
+
         scoreElement.textContent = score;
 
         if (score > highscore) {
             highscore = score;
 
             localStorage.setItem("snakeHighscore", highscore);
+
             highscoreElement.textContent = highscore;
         }
 
         createFood();
+
+        // Herz-Zähler
+        if (extraLivesEnabled && !heart) {
+            foodsUntilHeart--;
+
+            if (foodsUntilHeart <= 0) {
+                createHeart();
+            }
+        }
+
+        // Hindernis-Zähler
+        if (obstaclesEnabled) {
+            foodsUntilBlock--;
+
+            if (foodsUntilBlock <= 0) {
+                createBlock();
+
+                foodsUntilBlock = randomNumber(5, 7);
+            }
+        }
+
     } else {
         snake.pop();
     }
 
+    // Herz einsammeln
+    if (ateHeart) {
+        lives++;
+
+        livesElement.textContent = lives;
+
+        heart = null;
+
+        foodsUntilHeart = randomNumber(7, 10);
+    }
+
     drawSnake();
+}
+
+// Leben verlieren
+function loseLife() {
+    if (lives > 0) {
+        lives--;
+
+        livesElement.textContent = lives;
+
+        // Schlange zurücksetzen
+        snake = [
+            { x: 10, y: 10 },
+            { x: 9, y: 10 },
+            { x: 8, y: 10 }
+        ];
+
+        direction = { x: 1, y: 0 };
+        nextDirection = { x: 1, y: 0 };
+
+        messageElement.textContent = "LIFE LOST!";
+
+        drawSnake();
+
+    } else {
+        endSnake();
+    }
 }
 
 // Spiel beenden
@@ -135,6 +308,8 @@ function endSnake() {
     clearInterval(gameInterval);
 
     gameRunning = false;
+    gamePaused = false;
+    gameOver = true;
 
     messageElement.textContent = "GAME OVER! Press Restart";
 }
@@ -170,6 +345,40 @@ function drawSnake() {
         gridSize - 6
     );
 
+    // Herz zeichnen
+    if (heart) {
+        ctx.fillStyle = "#ec4899";
+        ctx.font = "20px Arial";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+
+        ctx.fillText(
+            "♥",
+            heart.x * gridSize + gridSize / 2,
+            heart.y * gridSize + gridSize / 2
+        );
+    }
+
+    // Hindernisse zeichnen
+    blocks.forEach(block => {
+        ctx.fillStyle = "#64748b";
+
+        ctx.fillRect(
+            block.x * gridSize + 1,
+            block.y * gridSize + 1,
+            gridSize - 2,
+            gridSize - 2
+        );
+
+        ctx.strokeStyle = "#94a3b8";
+        ctx.strokeRect(
+            block.x * gridSize + 2,
+            block.y * gridSize + 2,
+            gridSize - 4,
+            gridSize - 4
+        );
+    });
+
     // Schlange zeichnen
     snake.forEach((part, index) => {
         ctx.fillStyle = index === 0 ? "#a78bfa" : "#8b5cf6";
@@ -197,16 +406,19 @@ function handleSnakeKeys(event) {
         event.preventDefault();
     }
 
-    if (event.key === " " && !gameRunning) {
+    // Pause mit P
+    if (event.key === "p" || event.key === "P") {
+        togglePause();
+        return;
+    }
+
+    // Spiel mit SPACE starten
+    if (event.key === " " && !gameRunning && !gamePaused) {
         startSnake();
         return;
     }
 
-    if (!gameRunning) {
-        return;
-    }
-    
-    if (!gameActive) {
+    if (!gameRunning || !gameActive) {
         return;
     }
 
@@ -248,16 +460,19 @@ function handleSnakeKeys(event) {
 // Events
 document.addEventListener("keydown", handleSnakeKeys);
 
+startButton.addEventListener("click", startSnake);
+
 restartButton.addEventListener("click", () => {
     if (!gameActive) return;
 
     resetSnake();
-    startSnake();
 });
 
 // Spiel verlassen
 function stopSnake() {
     clearInterval(gameInterval);
+
     gameRunning = false;
+    gamePaused = false;
     gameActive = false;
 }

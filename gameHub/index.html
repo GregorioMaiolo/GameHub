@@ -182,6 +182,22 @@
 
                     <div id="snakeGame" class="snake-game hidden">
 
+                        <div id="snakeSettings" class="snake-settings">
+                            <h3>Game Settings</h3>
+
+                            <label>
+                                <input type="checkbox" id="snakeExtraLives" checked>
+                                Extra Lives ❤️
+                            </label>
+
+                            <label>
+                                <input type="checkbox" id="snakeObstacles" checked>
+                                Obstacles 🧱
+                            </label>
+
+                            <button id="snakeStart">Start Game</button>
+                        </div>
+
                         <div class="snake-stats">
                             <div>
                                 <p>SCORE</p>
@@ -191,6 +207,11 @@
                             <div>
                                 <p>HIGH SCORE</p>
                                 <h2 id="snakeHighscore">0</h2>
+                            </div>
+
+                            <div>
+                                <p>LIVES ❤️</p>
+                                <h2 id="snakeLives">0</h2>
                             </div>
                         </div>
 

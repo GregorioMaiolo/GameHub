@@ -101,6 +101,11 @@ function saveRecentlyPlayed() {
     );
 }
 
+if (recentlyPlayed.length > 3) {
+    recentlyPlayed = recentlyPlayed.slice(0, 3);
+    saveRecentlyPlayed();
+}
+
 /* Favorites */
 
 function updateFavoriteButtons() {
@@ -150,8 +155,8 @@ function addRecentlyPlayed(gameId) {
 
     recentlyPlayed.unshift(gameId);
 
-    // Maximal 10 Spiele speichern
-    recentlyPlayed = recentlyPlayed.slice(0, 10);
+    // Maximal 3 Spiele speichern
+    recentlyPlayed = recentlyPlayed.slice(0, 3);
 
     saveRecentlyPlayed();
 
