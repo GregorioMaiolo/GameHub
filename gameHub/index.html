@@ -13,7 +13,7 @@
     <div class="app">
 
         <aside class="sidebar">
-            <h2 class="logo">GAME<span>HUB</span></h2>
+            <a class="logo" href="./index.html" aria-label="GameHub - zur Spielebibliothek">GAME<span>HUB</span></a>
 
 
             <nav>
@@ -161,6 +161,31 @@
 
                         </div>
 
+                        <div class="game-card" data-game="viergewinnt">
+
+                            <div class="game-image viergewinnt">
+                                <img src="assets/images/viergewinnt.jpg" alt="Vier Gewinnt">
+                                <span>STRATEGY</span>
+                            </div>
+
+                            <div class="game-info">
+                                <h3>Vier Gewinnt</h3>
+                                <p>Classic Strategy Game</p>
+
+                                <div class="game-actions">
+                                    <button class="favorite-btn" title="Add to Favorites">
+                                        ☆
+                                    </button>
+
+                                    <button class="info-btn" title="Game Information">
+                                        i
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+
+
                     </div>
 
                 </section>
@@ -256,6 +281,8 @@
 
                     </div>
 
+                    <div id="viergewinntGame" class="mini-game hidden"></div>
+
                 </div>
 
 
@@ -296,6 +323,7 @@
     <script src="js/games/pong.js"></script>
     <script src="js/games/memory.js"></script>
     <script src="js/games/numberguess.js"></script>
+    <script src="js/games/viergewinnt.js"></script>
 </body>
 
 </html>

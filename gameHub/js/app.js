@@ -15,6 +15,7 @@ const gameCategory = document.getElementById("gameCategory");
 
 const snakeGame = document.getElementById("snakeGame");
 const placeholder = document.getElementById("placeholderGame");
+const viergewinntGame = document.getElementById("viergewinntGame");
 
 /* Game Info Elements */
 
@@ -52,7 +53,7 @@ const games = {
         description: "Retro Arcade Game",
         category: "ARCADE",
         instructions: "Play against your opponent and try to get the ball past their paddle.",
-        controls: "W and S or Arrow Keys to move."
+        controls: "W/S or Arrow Up/Down to move."
     },
 
     memory: {
@@ -69,6 +70,14 @@ const games = {
         category: "PUZZLE",
         instructions: "The computer generates a random number between 1 and your chosen maximum. Try to guess the correct number.",
         controls: "Enter a number and click Guess."
+    },
+
+    viergewinnt: {
+        title: "Vier Gewinnt",
+        description: "Classic Strategy Game",
+        category: "STRATEGY",
+        instructions: "Two players take turns dropping colored stones into the board. The first player to connect four stones horizontally, vertically or diagonally wins.",
+        controls: "Click on a column to drop your stone."
     }
 
 };
@@ -252,6 +261,7 @@ function openGame(gameId) {
 
     snakeGame.classList.add("hidden");
     placeholder.classList.add("hidden");
+    viergewinntGame.classList.add("hidden");
 
     document.getElementById("tictactoeGame")?.classList.add("hidden");
     document.getElementById("pongGame")?.classList.add("hidden");
@@ -281,6 +291,11 @@ function openGame(gameId) {
 
         initNumberGuess();
 
+    } else if (gameId === "viergewinnt") {
+
+        viergewinntGame.classList.remove("hidden");
+        initVierGewinnt();
+
     }
 
     applyFilters();
@@ -296,6 +311,7 @@ function closeGame() {
 
     snakeGame.classList.add("hidden");
     placeholder.classList.remove("hidden");
+    viergewinntGame.classList.add("hidden");
 
     document.getElementById("tictactoeGame")?.classList.add("hidden");
     document.getElementById("pongGame")?.classList.add("hidden");

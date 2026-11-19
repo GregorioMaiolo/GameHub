@@ -19,7 +19,7 @@ function initPong() {
     game.innerHTML = `
         <h2 id="pongScore">0 : 0</h2>
         <canvas id="pongCanvas" width="600" height="350"></canvas>
-        <p>Controls: W / S</p>
+        <p>Controls: W / S or Arrow Up / Down</p>
     `;
 
     const canvas = game.querySelector("#pongCanvas");
@@ -42,7 +42,13 @@ function initPong() {
     pongActive = true;
 
     function keyDown(event) {
-        keys[event.key.toLowerCase()] = true;
+        const key = event.key.toLowerCase();
+
+        if (key === "arrowup" || key === "arrowdown") {
+            event.preventDefault();
+        }
+
+        keys[key] = true;
     }
 
     function keyUp(event) {
@@ -75,8 +81,8 @@ function initPong() {
         ctx.fill();
 
         // Spieler bewegen
-        if (keys["w"]) playerY -= 6;
-        if (keys["s"]) playerY += 6;
+        if (keys["w"] || keys["arrowup"]) playerY -= 6;
+        if (keys["s"] || keys["arrowdown"]) playerY += 6;
 
         playerY = Math.max(0, Math.min(280, playerY));
 
