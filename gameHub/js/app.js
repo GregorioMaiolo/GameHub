@@ -16,6 +16,7 @@ const gameCategory = document.getElementById("gameCategory");
 const snakeGame = document.getElementById("snakeGame");
 const placeholder = document.getElementById("placeholderGame");
 const viergewinntGame = document.getElementById("viergewinntGame");
+const tetrisGame = document.getElementById("tetrisGame");
 
 /* Game Info Elements */
 
@@ -78,6 +79,14 @@ const games = {
         category: "STRATEGY",
         instructions: "Two players take turns dropping colored stones into the board. The first player to connect four stones horizontally, vertically or diagonally wins.",
         controls: "Click on a column to drop your stone."
+    },
+
+    tetris: {
+        title: "Tetris",
+        description: "Classic Block Puzzle",
+        category: "PUZZLE",
+        instructions: "Move and rotate falling blocks to create complete horizontal lines. Every completed line gives you points. The game gets faster as your level increases.",
+        controls: "Arrow Keys to move and rotate. SPACE to drop instantly. P to pause."
     }
 
 };
@@ -267,8 +276,11 @@ function openGame(gameId) {
     document.getElementById("pongGame")?.classList.add("hidden");
     document.getElementById("memoryGame")?.classList.add("hidden");
     document.getElementById("numberguessGame")?.classList.add("hidden");
+    tetrisGame.classList.add("hidden");
+
 
     stopPong();
+    stopTetris();
 
     if (gameId === "snake") {
 
@@ -297,6 +309,12 @@ function openGame(gameId) {
         initVierGewinnt();
 
     }
+    else if (gameId === "tetris") {
+
+        tetrisGame.classList.remove("hidden");
+        initTetris();
+
+    }
 
     applyFilters();
 
@@ -308,6 +326,9 @@ function closeGame() {
 
     stopSnake();
     stopPong();
+
+    stopTetris();
+    tetrisGame.classList.add("hidden");
 
     snakeGame.classList.add("hidden");
     placeholder.classList.remove("hidden");
